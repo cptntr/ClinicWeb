@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Data.SqlClient;
-using Clinic.Web.Models;
+using Clinic.Web.Entities;
 using Clinic.Web.DAL.Abstract;
 
 namespace Clinic.Web.DAL.ADO
 {
     public class PatientsRepository : IPatientsRepository
     {
-        public IEnumerable<PatientsModel> Read()
+        public IEnumerable<PatientsEntity> ReadAll()
         {
-            List<PatientsModel> patients = new List<PatientsModel>();
+            List<PatientsEntity> patients = new List<PatientsEntity>();
 
             const string _procedure = "READ_Patients";
             var (_connection, _command, _transaction) = new ConnectionManager().CreateConnection(_procedure);
@@ -25,11 +25,12 @@ namespace Clinic.Web.DAL.ADO
                     {
                         while (_dataReader.Read())
                         {
-                            PatientsModel _patient = new PatientsModel
+                            PatientsEntity _patient = new PatientsEntity
                             {
                                 Id = _dataReader.GetInt32("id"),
                                 IdPerson = _dataReader.GetInt32("id_person"),
-                                IdDoctor = _dataReader.GetInt32("id_patient"),
+                                IdDoctor = _dataReader.GetInt32("id_doctor"),
+                                Removed = _dataReader.GetBoolean("removed"),
                             };
                             _patient.Doctor = new DoctorsRepository().ReadOne(_patient.IdDoctor);
                             _patient.Person = new PersonsRepository().ReadOne(_patient.IdPerson);
@@ -49,9 +50,9 @@ namespace Clinic.Web.DAL.ADO
             return patients;
         }
         //---------------------------------------------------------------------
-        public PatientsModel ReadOne(int _id)
+        public PatientsEntity ReadOne(int _id)
         {
-            PatientsModel patient = new PatientsModel();
+            PatientsEntity patient = new PatientsEntity();
 
             const string _procedure = "READ_Patients_one";
             var (_connection, _command, _transaction) = new ConnectionManager().CreateConnection(_procedure);
@@ -65,11 +66,12 @@ namespace Clinic.Web.DAL.ADO
                     {
                         while (_dataReader.Read())
                         {
-                            PatientsModel _patient = new PatientsModel
+                            PatientsEntity _patient = new PatientsEntity
                             {
                                 Id = _dataReader.GetInt32("id"),
                                 IdPerson = _dataReader.GetInt32("id_person"),
                                 IdDoctor = _dataReader.GetInt32("id_doctor"),
+                                Removed = _dataReader.GetBoolean("removed"),
                             };
                             _patient.Doctor = new DoctorsRepository().ReadOne(_patient.IdDoctor);
                             _patient.Person = new PersonsRepository().ReadOne(_patient.IdPerson);
@@ -89,9 +91,9 @@ namespace Clinic.Web.DAL.ADO
             return patient;
         }
         //---------------------------------------------------------------------
-        public IEnumerable<PatientsModel> Search(string _search)
+        public IEnumerable<PatientsEntity> Search(string _search)
         {
-            List<PatientsModel> patients = new List<PatientsModel>();
+            List<PatientsEntity> patients = new List<PatientsEntity>();
             const string _procedure = "SRCH_Patients";
             var (_connection, _command, _transaction) = new ConnectionManager().CreateConnection(_procedure);
             _command.Parameters.Add(new SqlParameter("@_search", _search));
@@ -104,11 +106,12 @@ namespace Clinic.Web.DAL.ADO
                     {
                         while (_dataReader.Read())
                         {
-                            PatientsModel _patient = new PatientsModel
+                            PatientsEntity _patient = new PatientsEntity
                             {
                                 Id = _dataReader.GetInt32("id"),
                                 IdPerson = _dataReader.GetInt32("id_person"),
-                                IdDoctor = _dataReader.GetInt32("id_patient"),
+                                IdDoctor = _dataReader.GetInt32("id_doctor"),
+                                Removed = _dataReader.GetBoolean("removed"),
                             };
                             _patient.Doctor = new DoctorsRepository().ReadOne(_patient.IdDoctor);
                             _patient.Person = new PersonsRepository().ReadOne(_patient.IdPerson);
@@ -128,7 +131,7 @@ namespace Clinic.Web.DAL.ADO
             return patients;
         }
         //---------------------------------------------------------------------
-        public PatientsModel Insert(PatientsModel _patient)
+        public PatientsEntity Insert(PatientsEntity _patient)
         {
             string _procedure = "CRT_Patients";
             var (_connection, _command, _transaction) = new ConnectionManager().CreateConnection(_procedure);
@@ -142,7 +145,7 @@ namespace Clinic.Web.DAL.ADO
             return _patient;
         }
         //---------------------------------------------------------------------
-        public PatientsModel Update(int _id, PatientsModel _patient)
+        public PatientsEntity Update(int _id, PatientsEntity _patient)
         {
             string _procedure = "UPD_Patients";
             var (_connection, _command, _transaction) = new ConnectionManager().CreateConnection(_procedure);

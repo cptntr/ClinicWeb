@@ -15,7 +15,7 @@ namespace Clinic.Web.Controllers
         }
         public IActionResult Index()
         {
-            IEnumerable<SpecialtiesViewModel> specialties = _specialtiesManager.ReadSpecialties();
+            IEnumerable<SpecialtiesViewModel> specialties = _specialtiesManager.ReadAllSpecialties();
             return View(specialties);
         }
 

@@ -1,6 +1,6 @@
 using System;
 
-namespace Clinic.Web.Models
+namespace Clinic.Web.Entities
 {
     public class ErrorViewModel
     {

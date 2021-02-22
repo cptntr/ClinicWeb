@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Clinic.Web.Models;
+using Clinic.Web.Entities;
 
 namespace Clinic.Web.DAL.Abstract
 {
     public interface ICasesRepository
     {
-        IEnumerable<CasesModel> Read();
-        IEnumerable<CasesModel> Search(string _search);
+        IEnumerable<CasesEntity> Read();
+        IEnumerable<CasesEntity> Search(string _search);
         //IEnumerable<CasesModel> ReadForDoctor(int _id);
-        CasesModel Insert(CasesModel _case);
-        CasesModel Update(int _id, CasesModel _case);
+        CasesEntity Insert(CasesEntity _case);
+        CasesEntity Update(int _id, CasesEntity _case);
+        CasesEntity UpdateCloseCase(int _id);
         void Delete(int _id);
     }
 }

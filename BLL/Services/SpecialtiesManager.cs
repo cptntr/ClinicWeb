@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Clinic.Web.Models;
+using Clinic.Web.Entities;
 using Clinic.Web.DAL.ADO;
 using Clinic.Web.BLL.Interfaces;
 using Clinic.Web.BLL.ViewModels;
@@ -11,11 +11,11 @@ namespace Clinic.Web.BLL.Services
 {
     public class SpecialtiesManager : ISpecialtiesManager
     {
-        public IEnumerable<SpecialtiesViewModel> ReadSpecialties()
+        public IEnumerable<SpecialtiesViewModel> ReadAllSpecialties()
         {
-            IEnumerable<SpecialtiesModel> specialties = new SpecialtiesRepository().ReadAll();
+            IEnumerable<SpecialtiesEntity> specialties = new SpecialtiesRepository().ReadAll();
             List<SpecialtiesViewModel> specialties_vm = new List<SpecialtiesViewModel>();
-            foreach (SpecialtiesModel _s in specialties)
+            foreach (SpecialtiesEntity _s in specialties)
             {
                 specialties_vm.Add(new SpecialtiesViewModel
                 {
@@ -27,7 +27,7 @@ namespace Clinic.Web.BLL.Services
         }
         public SpecialtiesViewModel ReadOneSpecialty(int _id)
         {
-            SpecialtiesModel specialty = new SpecialtiesRepository().ReadOneById(_id);
+            SpecialtiesEntity specialty = new SpecialtiesRepository().ReadOneById(_id);
             SpecialtiesViewModel specialty_vm = new SpecialtiesViewModel();
 
             specialty_vm.Id = specialty.Id;
@@ -37,9 +37,9 @@ namespace Clinic.Web.BLL.Services
         }
         public IEnumerable<SpecialtiesViewModel> ReadAllAvaibleForDoctor(int _id_doctor)
         {
-            IEnumerable<SpecialtiesModel> specialties = new SpecialtiesRepository().ReadAllExceptDoctor(_id_doctor);
+            IEnumerable<SpecialtiesEntity> specialties = new SpecialtiesRepository().ReadAllExceptDoctor(_id_doctor);
             List<SpecialtiesViewModel> specialties_vm = new List<SpecialtiesViewModel>();
-            foreach (SpecialtiesModel _s in specialties)
+            foreach (SpecialtiesEntity _s in specialties)
             {
                 specialties_vm.Add(new SpecialtiesViewModel
                 {
@@ -56,7 +56,7 @@ namespace Clinic.Web.BLL.Services
         }
         public void AddSpecialty(SpecialtiesViewModel _specialty)
         {
-            SpecialtiesModel specialty = new SpecialtiesModel();
+            SpecialtiesEntity specialty = new SpecialtiesEntity();
 
             specialty.Id = _specialty.Id;
             specialty.Name = _specialty.Name;
@@ -65,7 +65,7 @@ namespace Clinic.Web.BLL.Services
         }
         public SpecialtiesViewModel UpdateSpecialty(SpecialtiesViewModel _specialty)
         {
-            SpecialtiesModel upd_specialty = new SpecialtiesModel()
+            SpecialtiesEntity upd_specialty = new SpecialtiesEntity()
             {
                 Id = _specialty.Id,
                 Name = _specialty.Name

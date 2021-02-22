@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Clinic.Web.Models
+namespace Clinic.Web.Entities
 {
-    public partial class DepartmentsModel
+    public partial class DepartmentsEntity
     {
 /*        public DepartmentsModel()
         {

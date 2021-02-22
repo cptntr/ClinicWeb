@@ -10,8 +10,9 @@ namespace Clinic.Web.BLL.Interfaces
     {
         public IEnumerable<CasesViewModel> ReadCases();
         public CasesViewModel ReadOneCase(int id);
-/*        public void DeleteCase(int id);
-        public void AddCase(CasesViewModel _specialty);
-        public CasesViewModel UpdateCase(CasesViewModel _specialty);*/
+        public void UpdateCloseCase(int id);
+        public void DeleteCase(int id);
+        public CasesViewModel AddCase(CasesViewModel _case);
+        public CasesViewModel UpdateCase(int _id_case, CasesViewModel _case);
     }
 }

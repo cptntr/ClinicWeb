@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Clinic.Web.BLL.Interfaces;
-using Clinic.Web.Models;
+using Clinic.Web.Entities;
 using Clinic.Web.DAL.ADO;
 using Clinic.Web.BLL.ViewModels;
 
@@ -11,18 +11,18 @@ namespace Clinic.Web.BLL.Services
     {
         public IEnumerable<CasesViewModel> ReadCases()
         {
-            IEnumerable<CasesModel> cases = new CasesRepository().Read();
+            IEnumerable<CasesEntity> cases = new CasesRepository().Read();
             List<CasesViewModel> cases_vm = new List<CasesViewModel>();
 
-            foreach (CasesModel _case in cases)
+            foreach (CasesEntity _case in cases)
             {
                 cases_vm.Add(new CasesViewModel
                 {
                     Id = _case.Id,
                     Doctor = _case.Doctor.Person.Name + ' ' + _case.Doctor.Person.Surname,
                     Patient = _case.Patient.Person.Name + ' ' + _case.Patient.Person.Surname,
-                    Created = _case.Created,
-                    Closed = _case.Closed,
+                    Created = string.Format("{0:dd/MM/yyyy}", _case.Created),
+                    Closed = string.Format("{0:dd/MM/yyyy}", _case.Closed),
                     Conclusion = _case.Conclusion,
                 });
             }
@@ -30,18 +30,18 @@ namespace Clinic.Web.BLL.Services
         }
         public IEnumerable<CasesViewModel> SearchCases(string _search)
         {
-            IEnumerable<CasesModel> cases = new CasesRepository().Search(_search);
+            IEnumerable<CasesEntity> cases = new CasesRepository().Search(_search);
             List<CasesViewModel> cases_vm = new List<CasesViewModel>();
 
-            foreach (CasesModel _case in cases)
+            foreach (CasesEntity _case in cases)
             {
                 cases_vm.Add(new CasesViewModel
                 {
                     Id = _case.Id,
                     Doctor = _case.Doctor.Person.Name + ' ' + _case.Doctor.Person.Surname,
                     Patient = _case.Patient.Person.Name + ' ' + _case.Patient.Person.Surname,
-                    Created = _case.Created,
-                    Closed = _case.Closed,
+                    Created = string.Format("{0:dd/MM/yyyy}", _case.Created),
+                    Closed = string.Format("{0:dd/MM/yyyy}", _case.Closed),
                     Conclusion = _case.Conclusion,
                 });
             }
@@ -49,7 +49,7 @@ namespace Clinic.Web.BLL.Services
         }
         public CasesViewModel ReadOneCase(int _id)
         {
-            CasesModel _case = new CasesRepository().ReadOne(_id);
+            CasesEntity _case = new CasesRepository().ReadOne(_id);
             CasesViewModel doctor_vm = new CasesViewModel();
 
             doctor_vm = new CasesViewModel
@@ -57,8 +57,8 @@ namespace Clinic.Web.BLL.Services
                 Id = _case.Id,
                 Doctor = _case.Doctor.Person.Name + ' ' + _case.Doctor.Person.Surname,
                 Patient = _case.Patient.Person.Name + ' ' + _case.Patient.Person.Surname,
-                Created = _case.Created,
-                Closed = _case.Closed,
+                Created = string.Format("{0:dd/MM/yyyy}", _case.Created),
+                Closed = string.Format("{0:dd/MM/yyyy}", _case.Closed),
                 Conclusion = _case.Conclusion,
             };
 
@@ -67,7 +67,7 @@ namespace Clinic.Web.BLL.Services
 
         public CasesViewModel AddCase(CasesViewModel _case)
         {
-            CasesModel new_case = new CasesModel();
+            CasesEntity new_case = new CasesEntity();
 
             /*new_case.Person.Name = _case.Name;
             new_case.Person.Surname = _case.Surname;
@@ -82,7 +82,7 @@ namespace Clinic.Web.BLL.Services
 
         public CasesViewModel UpdateCase(int _id_case, CasesViewModel _case)
         {
-            CasesModel upd_case = new CasesModel();
+            CasesEntity upd_case = new CasesEntity();
 
             /*upd_case.Person.Name = _case.Name;
             upd_case.Person.Surname = _case.Surname;
@@ -93,6 +93,11 @@ namespace Clinic.Web.BLL.Services
             new CasesRepository().Update(_id_case, upd_case);
 
             return new CasesViewModel()/*this.ReadOneCase(0)*/;
+        }
+
+        public void UpdateCloseCase(int id)
+        {
+            new CasesRepository().UpdateCloseCase(id);
         }
         public void DeleteCase(int _id)
         {

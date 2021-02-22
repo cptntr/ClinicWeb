@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Data.SqlClient;
-using Clinic.Web.Models;
+using Clinic.Web.Entities;
 using Clinic.Web.DAL.Abstract;
 
 namespace Clinic.Web.DAL.ADO
 {
     public class DepartmentsRepository : IDepartmentsRepository
     {
-        public IEnumerable<DepartmentsModel> Read()
+        public IEnumerable<DepartmentsEntity> ReadAll()
         {
-            List<DepartmentsModel> departments = new List<DepartmentsModel>();
+            List<DepartmentsEntity> departments = new List<DepartmentsEntity>();
             string _procedure = "READ_Departments";
 
             var (_connection, _command, _transaction) = new ConnectionManager().CreateConnection(_procedure);
@@ -25,7 +25,7 @@ namespace Clinic.Web.DAL.ADO
                     {
                         while (_dataReader.Read())
                         {
-                            DepartmentsModel _department = new DepartmentsModel()
+                            DepartmentsEntity _department = new DepartmentsEntity()
                             {
                                 Id = _dataReader.GetInt32("id"),
                                 Name = _dataReader.GetString("name")
@@ -46,9 +46,9 @@ namespace Clinic.Web.DAL.ADO
             return departments;
         }
         //-----------------------------------------------------------
-        public DepartmentsModel ReadOne(int _id)
+        public DepartmentsEntity ReadOne(int _id)
         {
-            DepartmentsModel departments = new DepartmentsModel();
+            DepartmentsEntity departments = new DepartmentsEntity();
             string _procedure = "READ_Departments_one";
             var (_connection, _command, _transaction) = new ConnectionManager().CreateConnection(_procedure);
             _command.Parameters.Add(new SqlParameter("@_id", _id));
@@ -61,7 +61,7 @@ namespace Clinic.Web.DAL.ADO
                     {
                         while (_dataReader.Read())
                         {
-                            DepartmentsModel _department = new DepartmentsModel()
+                            DepartmentsEntity _department = new DepartmentsEntity()
                             {
                                 Id = _dataReader.GetInt32("id"),
                                 Name = _dataReader.GetString("name")
@@ -82,7 +82,7 @@ namespace Clinic.Web.DAL.ADO
             return departments;
         }
         //-----------------------------------------------------------
-        public DepartmentsModel Insert(DepartmentsModel _department)
+        public DepartmentsEntity Insert(DepartmentsEntity _department)
         {
             string _procedure = "CRT_Departments";
             var (_connection, _command, _transaction) = new ConnectionManager().CreateConnection(_procedure);
@@ -92,7 +92,7 @@ namespace Clinic.Web.DAL.ADO
             return _department;
         }
         //-----------------------------------------------------------
-        public DepartmentsModel Update(int _id, DepartmentsModel _department)
+        public DepartmentsEntity Update(int _id, DepartmentsEntity _department)
         {
             string _procedure = "UPD_Departments";
             var (_connection, _command, _transaction) = new ConnectionManager().CreateConnection(_procedure);

@@ -8,6 +8,6 @@ namespace Clinic.Web.BLL.ViewModels
     public class DoctorsShortViewModel
     {
         public int Id { get; set; }
-        public string Doctor{ get; set; } // name + ' ' + surname
+        public string DoctorNS { get; set; } // name + ' ' + surname
     }
 }

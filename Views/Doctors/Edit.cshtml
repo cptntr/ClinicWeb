@@ -1,4 +1,4 @@
-﻿@model Clinic.Web.BLL.ViewModels.DoctorsEditViewModel
+﻿@model Clinic.Web.BLL.ViewModels.DoctorsViewModel
 
 @{
     Layout = null;
@@ -13,7 +13,7 @@
 </head>
 <body>
 
-<h4>DoctorsEditViewModel</h4>
+<h4>DoctorsViewModel</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -23,6 +23,11 @@
                 <label asp-for="Id" class="control-label"></label>
                 <input asp-for="Id" class="form-control" />
                 <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DoctorNS" class="control-label"></label>
+                <input asp-for="DoctorNS" class="form-control" />
+                <span asp-validation-for="DoctorNS" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
@@ -48,6 +53,16 @@
                 <label asp-for="Department" class="control-label"></label>
                 <input asp-for="Department" class="form-control" />
                 <span asp-validation-for="Department" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Specialties" class="control-label"></label>
+                <input asp-for="Specialties" class="form-control" />
+                <span asp-validation-for="Specialties" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Removed" /> @Html.DisplayNameFor(model => model.Removed)
+                </label>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

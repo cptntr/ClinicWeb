@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Clinic.Web.Models;
+using Clinic.Web.Entities;
 
 namespace Clinic.Web.DAL.Abstract
 {
     public interface ISpecialtiesRepository
     {
-        IEnumerable<SpecialtiesModel> ReadAll();
-        IEnumerable<SpecialtiesModel> ReadAllForDoctor(int _id_doctor);
-        IEnumerable<SpecialtiesModel> ReadAllExceptDoctor(int _id_doctor);
-        SpecialtiesModel ReadOneById(int _id);
+        IEnumerable<SpecialtiesEntity> ReadAll();
+        IEnumerable<SpecialtiesEntity> ReadAllForDoctor(int _id_doctor);
+        IEnumerable<SpecialtiesEntity> ReadAllExceptDoctor(int _id_doctor);
+        SpecialtiesEntity ReadOneById(int _id);
 
-        SpecialtiesModel Insert(SpecialtiesModel _specialty);
-        SpecialtiesModel Update(int _id, SpecialtiesModel _specialty);
+        SpecialtiesEntity Insert(SpecialtiesEntity _specialty);
+        SpecialtiesEntity Update(int _id, SpecialtiesEntity _specialty);
         void Delete(int _id);
     }
 }

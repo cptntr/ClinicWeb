@@ -8,7 +8,7 @@ namespace Clinic.Web.BLL.Interfaces
 {
     public interface ISpecialtiesManager
     {
-        public IEnumerable<SpecialtiesViewModel> ReadSpecialties();
+        public IEnumerable<SpecialtiesViewModel> ReadAllSpecialties();
         public SpecialtiesViewModel ReadOneSpecialty(int id);
         public IEnumerable<SpecialtiesViewModel> ReadAllAvaibleForDoctor(int _id_doctor);
         public void DeleteSpecialty(int id);

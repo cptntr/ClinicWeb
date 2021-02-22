@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Clinic.Web.Models
+namespace Clinic.Web.Entities
 {
-    public partial class CasesModel
+    public partial class CasesEntity
     {
         public int Id { get; set; }
         public int IdPatient { get; set; }
@@ -10,8 +10,8 @@ namespace Clinic.Web.Models
         public DateTime Created { get; set; }
         public DateTime? Closed { get; set; }
         public string Conclusion { get; set; }
-
-        public virtual PatientsModel Patient { get; set; }
-        public virtual DoctorsModel Doctor { get; set; }
+        public bool isclosed { get; set; }
+        public virtual PatientsEntity Patient { get; set; }
+        public virtual DoctorsEntity Doctor { get; set; }
     }
 }

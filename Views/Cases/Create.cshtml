@@ -1,0 +1,67 @@
+﻿@model Clinic.Web.BLL.ViewModels.CasesViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+</head>
+<body>
+
+<h4>CasesViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group" style="visibility:hidden">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Created" class="control-label"></label>
+                <input asp-for="Created" class="form-control" />
+                <span asp-validation-for="Created" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Closed" class="control-label"></label>
+                <input asp-for="Closed" class="form-control" />
+                <span asp-validation-for="Closed" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Conclusion" class="control-label"></label>
+                <input asp-for="Conclusion" class="form-control" />
+                <span asp-validation-for="Conclusion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Patient" class="control-label"></label>
+                <input asp-for="Patient" class="form-control" />
+                <span asp-validation-for="Patient" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Doctor" class="control-label"></label>
+                <input asp-for="Doctor" class="form-control" />
+                <span asp-validation-for="Doctor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+</body>
+</html>

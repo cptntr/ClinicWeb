@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Data.SqlClient;
-using Clinic.Web.Models;
+using Clinic.Web.Entities;
 using Clinic.Web.DAL.Abstract;
 
 namespace Clinic.Web.DAL.ADO
 {
     public class DoctorsRepository : IDoctorsRepository
     {
-        public IEnumerable<DoctorsModel> Read()
+        public IEnumerable<DoctorsEntity> ReadAll()
         {
-            List<DoctorsModel> doctors = new List<DoctorsModel>();
+            List<DoctorsEntity> doctors = new List<DoctorsEntity>();
             const string _procedure = "READ_Doctors";
             var (_connection, _command, _transaction) = new ConnectionManager().CreateConnection(_procedure);
 
@@ -24,7 +24,7 @@ namespace Clinic.Web.DAL.ADO
                     {
                         while (_dataReader.Read())
                         {
-                            DoctorsModel _doctor = new DoctorsModel
+                            DoctorsEntity _doctor = new DoctorsEntity
                             {
                                 Id = _dataReader.GetInt32("id"),
                                 IdPerson = _dataReader.GetInt32("id_person"),
@@ -51,9 +51,51 @@ namespace Clinic.Web.DAL.ADO
             return doctors;
         }
         //---------------------------------------------------------------------
-        public DoctorsModel ReadOne(int _id_doctor)
+        public IEnumerable<DoctorsEntity> ReadAllForDepartment(int _id_department)
         {
-            DoctorsModel doctor = new DoctorsModel();
+            List<DoctorsEntity> doctors = new List<DoctorsEntity>();
+            const string _procedure = "READ_Doctors_related_to_dep";
+            var (_connection, _command, _transaction) = new ConnectionManager().CreateConnection(_procedure);
+            _command.Parameters.Add(new SqlParameter("@_id_department", _id_department));
+
+            using (_connection)
+            {
+                try
+                {
+                    using (SqlDataReader _dataReader = _command.ExecuteReader())
+                    {
+                        while (_dataReader.Read())
+                        {
+                            DoctorsEntity _doctor = new DoctorsEntity
+                            {
+                                Id = _dataReader.GetInt32("id"),
+                                IdPerson = _dataReader.GetInt32("id_person"),
+                                IdDepartment = _dataReader.GetInt32("id_department"),
+                                Removed = _dataReader.GetBoolean("removed"),
+                            };
+                            _doctor.Person = new PersonsRepository().ReadOne(_doctor.IdPerson);
+                            _doctor.Department = new DepartmentsRepository().ReadOne(_doctor.IdDepartment);
+                            _doctor.Specialties =
+                                new SpecialtiesRepository().ReadAllForDoctor(_doctor.Id);
+
+                            doctors.Add(_doctor);
+                        }
+                        _dataReader.Close();
+                        //_transaction.Commit();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.Write(ex.Message);
+                    //_transaction.Rollback();
+                }
+            }
+            return doctors;
+        }
+        //---------------------------------------------------------------------
+        public DoctorsEntity ReadOne(int _id_doctor)
+        {
+            DoctorsEntity doctor = new DoctorsEntity();
             const string _procedure = "READ_Doctors_one";
             var (_connection, _command, _transaction) = new ConnectionManager().CreateConnection(_procedure);
             _command.Parameters.Add(new SqlParameter("@_id_doctor", _id_doctor));
@@ -66,7 +108,7 @@ namespace Clinic.Web.DAL.ADO
                     {
                         while (_dataReader.Read())
                         {
-                            DoctorsModel _doctor = new DoctorsModel
+                            DoctorsEntity _doctor = new DoctorsEntity
                             {
                                 Id = _dataReader.GetInt32("id"),
                                 Removed = _dataReader.GetBoolean("removed"),
@@ -93,9 +135,9 @@ namespace Clinic.Web.DAL.ADO
             return doctor;
         }
         //---------------------------------------------------------------------
-        public IEnumerable<DoctorsModel> Search(string _search)
+        public IEnumerable<DoctorsEntity> Search(string _search)
         {
-            List<DoctorsModel> doctors = new List<DoctorsModel>();
+            List<DoctorsEntity> doctors = new List<DoctorsEntity>();
             const string _procedure = "SRCH_Doctors";
             var (_connection, _command, _transaction) = new ConnectionManager().CreateConnection(_procedure);
             _command.Parameters.Add(new SqlParameter("@_search", _search));
@@ -108,7 +150,7 @@ namespace Clinic.Web.DAL.ADO
                     {
                         while (_dataReader.Read())
                         {
-                            DoctorsModel _doctor = new DoctorsModel
+                            DoctorsEntity _doctor = new DoctorsEntity
                             {
                                 Id = _dataReader.GetInt32("id"),
                                 Removed = _dataReader.GetBoolean("removed"),
@@ -135,7 +177,7 @@ namespace Clinic.Web.DAL.ADO
             return doctors;
         }
         //---------------------------------------------------------------------
-        public DoctorsModel Insert(DoctorsModel _doctor)
+        public DoctorsEntity Insert(DoctorsEntity _doctor)
         {
             string _procedure = "CRT_Doctors";
             var (_connection, _command, _transaction) = new ConnectionManager().CreateConnection(_procedure);
@@ -171,7 +213,7 @@ namespace Clinic.Web.DAL.ADO
             //return _doctor;
         }
         //---------------------------------------------------------------------
-        public DoctorsModel Update(int _id, DoctorsModel _doctor)
+        public DoctorsEntity Update(int _id, DoctorsEntity _doctor)
         {
             string _procedure = "UPD_Doctors";
             var (_connection, _command, _transaction) = new ConnectionManager().CreateConnection(_procedure);

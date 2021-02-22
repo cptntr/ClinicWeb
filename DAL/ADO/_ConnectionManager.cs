@@ -11,7 +11,19 @@ namespace Clinic.Web.DAL.ADO
         public ConnectionManager()
         {
             /*connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;*/
-            connectionString = "Data Source=.\\SQLEXPRESS;Initial Catalog=Clinic;Integrated Security=True";
+            //connectionString = "Data Source=93.75.228.127\\SQLEXPRESS,1234;Initial Catalog=Clinic; User Id=Random; Password=123123; Integrated Security=False";
+            //connectionString = "Data Source=clinic.h-storage-1.ovh,1234;Initial Catalog=Clinic; Integrated Security=False; User Id=Random; Password=123123123";
+
+            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+
+            builder.DataSource = "clinicazure.database.windows.net,1433";
+            builder.InitialCatalog = "Clinic";
+            builder.UserID = "taras";
+            builder.Password = "0112358";
+            builder.IntegratedSecurity = false;
+            //builder.ApplicationIntent = ApplicationIntent.ReadOnly;
+
+            connectionString = builder.ConnectionString;
         }
         public (SqlConnection _connection, SqlCommand _command, SqlTransaction _transaction) CreateConnection(string _procedure)
         {

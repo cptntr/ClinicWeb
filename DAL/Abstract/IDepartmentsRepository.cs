@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Clinic.Web.Models;
+using Clinic.Web.Entities;
 
 namespace Clinic.Web.DAL.Abstract
 {
     public interface IDepartmentsRepository
     {
-        IEnumerable<DepartmentsModel> Read();
-        DepartmentsModel ReadOne(int _id);
+        IEnumerable<DepartmentsEntity> ReadAll();
+        DepartmentsEntity ReadOne(int _id);
 
-        DepartmentsModel Insert(DepartmentsModel _department);
-        DepartmentsModel Update(int _id, DepartmentsModel _department);
+        DepartmentsEntity Insert(DepartmentsEntity _department);
+        DepartmentsEntity Update(int _id, DepartmentsEntity _department);
         void Delete(int _id);
     }
 }

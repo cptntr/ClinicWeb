@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Data.SqlClient;
-using Clinic.Web.Models;
+using Clinic.Web.Entities;
 using Clinic.Web.DAL.Abstract;
 
 namespace Clinic.Web.DAL.ADO
 {
     public class PersonsRepository : IPersonsRepository
     {
-        public IEnumerable<PersonsModel> Read()
+        public IEnumerable<PersonsEntity> Read()
         {
-            List<PersonsModel> persons = new List<PersonsModel>();
+            List<PersonsEntity> persons = new List<PersonsEntity>();
 
             const string _procedure = "READ_Persons";
             var (_connection, _command, _transaction) = new ConnectionManager().CreateConnection(_procedure);
@@ -25,7 +25,7 @@ namespace Clinic.Web.DAL.ADO
                     {
                         while (_dataReader.Read())
                         {
-                            PersonsModel _person = new PersonsModel
+                            PersonsEntity _person = new PersonsEntity
                             {
                                 Id = _dataReader.GetInt32("id"),
                                 Name = _dataReader.GetString("name"),
@@ -47,9 +47,9 @@ namespace Clinic.Web.DAL.ADO
             }
             return persons;
         }
-        public PersonsModel ReadOne(int _id)
+        public PersonsEntity ReadOne(int _id)
         {
-            PersonsModel persons = new PersonsModel();
+            PersonsEntity persons = new PersonsEntity();
 
             const string _procedure = "READ_Persons_one";
             var (_connection, _command, _transaction) = new ConnectionManager().CreateConnection(_procedure);
@@ -63,7 +63,7 @@ namespace Clinic.Web.DAL.ADO
                     {
                         while (_dataReader.Read())
                         {
-                            PersonsModel _person = new PersonsModel
+                            PersonsEntity _person = new PersonsEntity
                             {
                                 Id = _dataReader.GetInt32("id"),
                                 Name = _dataReader.GetString("name"),

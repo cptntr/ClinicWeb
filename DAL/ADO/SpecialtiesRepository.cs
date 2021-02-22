@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Data.SqlClient;
-using Clinic.Web.Models;
+using Clinic.Web.Entities;
 using Clinic.Web.DAL.Abstract;
 
 namespace Clinic.Web.DAL.ADO
 {
     public class SpecialtiesRepository : ISpecialtiesRepository
     {
-        public IEnumerable<SpecialtiesModel> ReadAll()
+        public IEnumerable<SpecialtiesEntity> ReadAll()
         {
-            List<SpecialtiesModel> specialties = new List<SpecialtiesModel>();
+            List<SpecialtiesEntity> specialties = new List<SpecialtiesEntity>();
             const string _procedure = "READ_Specialties";
             var (_connection, _command, _transaction) = new ConnectionManager().CreateConnection(_procedure);
 
@@ -24,7 +24,7 @@ namespace Clinic.Web.DAL.ADO
                     {
                         while (_dataReader.Read())
                         {
-                            SpecialtiesModel _specialty = new SpecialtiesModel
+                            SpecialtiesEntity _specialty = new SpecialtiesEntity
                             {
                                 Id = _dataReader.GetInt32("id"),
                                 Name = _dataReader.GetString("name"),
@@ -45,9 +45,9 @@ namespace Clinic.Web.DAL.ADO
             return specialties;
         }
         //---------------------------------------------------------------------
-        public IEnumerable<SpecialtiesModel> ReadAllForDoctor(int _id_doctor)
+        public IEnumerable<SpecialtiesEntity> ReadAllForDoctor(int _id_doctor)
         {
-            List<SpecialtiesModel> specialties = new List<SpecialtiesModel>();
+            List<SpecialtiesEntity> specialties = new List<SpecialtiesEntity>();
             string _procedure = "READ_Specialties_doc";
             var (_connection, _command, _transaction) = new ConnectionManager().CreateConnection(_procedure);
             _command.Parameters.Add(new SqlParameter("@_id_doctor", _id_doctor));
@@ -60,7 +60,7 @@ namespace Clinic.Web.DAL.ADO
                     {
                         while (_dataReader.Read())
                         {
-                            SpecialtiesModel _specialty = new SpecialtiesModel
+                            SpecialtiesEntity _specialty = new SpecialtiesEntity
                             {
                                 Id = _dataReader.GetInt32("id_specialty"),
                                 Name = _dataReader.GetString("name"),
@@ -81,9 +81,9 @@ namespace Clinic.Web.DAL.ADO
             return specialties;
         }
         //---------------------------------------------------------------------
-        public IEnumerable<SpecialtiesModel> ReadAllExceptDoctor(int _id_doctor)
+        public IEnumerable<SpecialtiesEntity> ReadAllExceptDoctor(int _id_doctor)
         {
-            List<SpecialtiesModel> specialties = new List<SpecialtiesModel>();
+            List<SpecialtiesEntity> specialties = new List<SpecialtiesEntity>();
             string _procedure = "READ_Specialties_exept_doc";
             var (_connection, _command, _transaction) = new ConnectionManager().CreateConnection(_procedure);
             _command.Parameters.Add(new SqlParameter("@_id_doctor", _id_doctor));
@@ -96,7 +96,7 @@ namespace Clinic.Web.DAL.ADO
                     {
                         while (_dataReader.Read())
                         {
-                            SpecialtiesModel _specialty = new SpecialtiesModel
+                            SpecialtiesEntity _specialty = new SpecialtiesEntity
                             {
                                 Id = _dataReader.GetInt32("id_specialty"),
                                 Name = _dataReader.GetString("name"),
@@ -117,9 +117,9 @@ namespace Clinic.Web.DAL.ADO
             return specialties;
         }
         //---------------------------------------------------------------------
-        public SpecialtiesModel ReadOneById(int _id)
+        public SpecialtiesEntity ReadOneById(int _id)
         {
-            SpecialtiesModel _specialty = new SpecialtiesModel();
+            SpecialtiesEntity _specialty = new SpecialtiesEntity();
             const string _procedure = "READ_Specialties_one";
             var (_connection, _command, _transaction) = new ConnectionManager().CreateConnection(_procedure);
             _command.Parameters.Add(new SqlParameter("@_id", _id));
@@ -149,7 +149,7 @@ namespace Clinic.Web.DAL.ADO
         }
 
         //---------------------------------------------------------------------
-        public SpecialtiesModel Insert(SpecialtiesModel _specialty)
+        public SpecialtiesEntity Insert(SpecialtiesEntity _specialty)
         {
             string _procedure = "CEX_Specialties";
             var (_connection, _command, _transaction) = new ConnectionManager().CreateConnection(_procedure);
@@ -159,7 +159,7 @@ namespace Clinic.Web.DAL.ADO
             return _specialty;
         }
         //---------------------------------------------------------------------
-        public SpecialtiesModel Update(int _id, SpecialtiesModel _specialty)
+        public SpecialtiesEntity Update(int _id, SpecialtiesEntity _specialty)
         {
             string _procedure = "UPD_Specialties";
             var (_connection, _command, _transaction) = new ConnectionManager().CreateConnection(_procedure);
