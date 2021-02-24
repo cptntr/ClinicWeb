@@ -22,7 +22,7 @@ namespace Clinic.Web.DAL.ADO
             builder.Password = "0112358";
             builder.IntegratedSecurity = false;
             //builder.ApplicationIntent = ApplicationIntent.ReadOnly;
-
+            builder.ApplicationName = "DefaultConnection";
             connectionString = builder.ConnectionString;
         }
         public (SqlConnection _connection, SqlCommand _command, SqlTransaction _transaction) CreateConnection(string _procedure)
