@@ -27,7 +27,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: powershell -File "C:\Users\Taras\Documents\# Архів\# Проекти\# SoftServe Academy\DevOps\1.ps1"
+        run: powershell -File C:\1.ps1
       - name: Run a one-line notify script
         run: powershell -Command "New-BurntToastNotification" -Text "Hello Taras", 'Git runner job complete'
       # Runs a set of commands using the runners shell
