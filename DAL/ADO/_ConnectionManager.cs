@@ -16,10 +16,10 @@ namespace Clinic.Web.DAL.ADO
 
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
 
-            builder.DataSource = "clinicazure.database.windows.net,1433";
+            builder.DataSource = ".\\SQLEXPRESS";
             builder.InitialCatalog = "Clinic";
-            builder.UserID = "taras";
-            builder.Password = "0112358";
+            builder.UserID = "Random";
+            builder.Password = "123123123";
             builder.IntegratedSecurity = false;
             //builder.ApplicationIntent = ApplicationIntent.ReadOnly;
             builder.ApplicationName = "DefaultConnection";
